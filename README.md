@@ -31,8 +31,10 @@ To show all console output, append the `-v` flag
 
 Once the data has been successfully copied over, the script changes the `LocalAppDataPath` registry value located in `Computer\HKEY_CURRENT_USER\Software\Plex, Inc.\Plex Media Server` to the new path specified by the user.
 
+Finally, the old Plex Media cache folder is renamed to `Plex Media Server old` to indicate the script has run successfully
+
 ## Post-run
-To ensure no data loss, this script does not remove any data from the previous Plex cache directory. Once you ensure that your data has been moved successfully and Plex is in working order, be sure to delete the previous plex media cache folder.
+To ensure no data loss, this script does not remove any data from the previous Plex cache directory. Once you ensure that your data has been moved successfully and Plex is in working order, be sure to delete the previous Plex Media cache folder.
 
 ## WARNING
 This script does access and edit your registry! If you do not feel comfortable tweaking values in the registry, do not run this script!
