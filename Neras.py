@@ -2,7 +2,6 @@ import os
 import argparse
 import subprocess
 import RegistryTool
-import logging
 from pathlib import Path
 
 OUTPUT_LOG = False
