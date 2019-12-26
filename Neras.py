@@ -43,6 +43,10 @@ def copy_data(source_folder: Path, destination_folder: Path):
     call_subprocess(command)
 
 
+def rename_old_directory(directory: Path, new_folder_name: str = 'Plex Media Server old'):
+    directory.rename(new_folder_name)
+
+
 def call_subprocess(command):
     if OUTPUT_LOG:
         subprocess.call(command)
@@ -60,7 +64,8 @@ def main():
     args = get_args()
     source, destination, destination_parent_directory = resolve_paths(args)
     copy_data(source, destination)
-    change_path_registry_value(destination_parent_directory)
+    change_path_registry_value(destination_parent_directory, TEST_KEY_NAME)
+    rename_old_directory(destination)
 
 
 if __name__ == "__main__":
