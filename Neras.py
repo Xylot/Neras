@@ -2,6 +2,7 @@ import os
 import argparse
 import subprocess
 import RegistryTool
+import logging
 from pathlib import Path
 
 OUTPUT_LOG = False
@@ -26,6 +27,9 @@ def resolve_paths(args: argparse.Namespace) -> Path:
 
     source = Path(args.source).absolute()
     destination = Path(args.destination).absolute()
+
+    print('Moving data from {} to {}'.format(str(source), str(destination)))
+
     return source, destination, destination.parent
 
 
@@ -35,6 +39,7 @@ def get_default_cache_folder() -> Path:
 
 
 def copy_data(source_folder: Path, destination_folder: Path):
+    print('Copying data... (This may take awhile)')
     command = []
     command.append('robocopy')
     command.append(str(source_folder))
@@ -55,6 +60,7 @@ def call_subprocess(command):
 
 
 def change_path_registry_value(new_path: Path, key_name: str = PATH_KEY_NAME):
+    print('Changing LocalAppDataPath registry value...')
     registy = RegistryTool.connect()
     key = RegistryTool.open_key(registy, PLEX_DIRECTORY)
     RegistryTool.set_key_value(key, key_name, 1, str(new_path))
@@ -64,8 +70,9 @@ def main():
     args = get_args()
     source, destination, destination_parent_directory = resolve_paths(args)
     copy_data(source, destination)
-    change_path_registry_value(destination_parent_directory, TEST_KEY_NAME)
+    change_path_registry_value(destination_parent_directory)
     rename_old_directory(destination)
+    print('Complete! Make sure to remove the old data folder once you ensure no data was lost')
 
 
 if __name__ == "__main__":
